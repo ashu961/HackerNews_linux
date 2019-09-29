@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import Axios from "axios";
 var i = 0;
-var j = 0;
+var url = "";
 const initialState = {
   id: [],
   content: []
@@ -16,7 +16,13 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
+const trimUrl = x => {
+  x = x.replace("https://", "");
+  x = x.replace("http://", "");
+  var ind = x.indexOf("/");
+  x = x.slice(0, ind);
+  return x;
+};
 function List4() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const fetchTopStories = () => {
@@ -26,7 +32,7 @@ function List4() {
       .then(res => (res = res.data))
       .then(res => {
         res.map(id => {
-          if (i === 40) {
+          if (i === 9) {
             return;
           }
           i++;
@@ -39,11 +45,6 @@ function List4() {
             );
         });
       });
-    //   .then(() => {
-    //     const content = Axios.get(
-    //       ` https://hacker-news.firebaseio.com/v0/item/2921983.json?print=pretty`
-    //     ).then(content => dispatch({ type: "addContent", payload: content }));
-    //   });
   };
 
   useEffect(() => {
@@ -53,13 +54,23 @@ function List4() {
   return (
     <div>
       <div>
-        {console.log(state.content)}
+        {/* {console.log(state.content)} */}
         {/* {state.content.map(detail => console.log(detail.data))} */}
         <div>
           {state.content.map((detail, index) => (
-            <li key={detail.data.id}>
-              {index + 1}.{detail.data.title}
-            </li>
+            <div>
+              {console.log(detail.data)}
+              <a href={detail.data.url} key={detail.data.id}>
+                {index + 1}.{detail.data.title}
+              </a>
+              <a href={"https://" + trimUrl(detail.data.url)}>
+                {" "}
+                ({trimUrl(detail.data.url)})
+              </a>
+              <br />
+              {detail.data.score} points by {detail.data.by} |{" "}
+              <a href="#">hide</a> | comments
+            </div>
           ))}
         </div>
       </div>
