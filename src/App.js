@@ -2,14 +2,16 @@ import React from "react";
 
 import "./App.css";
 import Header from "./components/Header";
-import List4 from "./components/List4";
-import ListContents from "./components/ListContents";
+import { BrowserRouter, Route } from "react-router-dom";
+import New from "./components/New";
+import Topstories from "./components/Topstories";
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <Header />
-      <ListContents />
-    </div>
+      <Route path="/" exact component={Topstories} />
+      <Route path="/new" exact component={New} />
+    </BrowserRouter>
   );
 }
 

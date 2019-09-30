@@ -17,11 +17,15 @@ const reducer = (state, action) => {
   }
 };
 const trimUrl = x => {
-  x = x.replace("https://", "");
-  x = x.replace("http://", "");
-  var ind = x.indexOf("/");
-  x = x.slice(0, ind);
-  return x;
+  if (!x) {
+    return "";
+  } else {
+    x = x.replace("https://", "");
+    x = x.replace("http://", "");
+    var ind = x.indexOf("/");
+    x = x.slice(0, ind);
+    return x;
+  }
 };
 const commentCheck = kids => {
   if (!kids) {
@@ -30,7 +34,7 @@ const commentCheck = kids => {
     return kids.length;
   }
 };
-function List4() {
+function New() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const fetchTopStories = () => {
     Axios.get(
@@ -85,4 +89,4 @@ function List4() {
   );
 }
 
-export default List4;
+export default New;
